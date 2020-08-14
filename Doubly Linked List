@@ -12,16 +12,19 @@
 
  return the head node of the updated list 
 """
-def SortedInsert(head, data):
-    new = Node(data=data)
-    tmp = head
-    while tmp.data <= data and tmp.next != None and tmp.next.data <= data:
-        tmp = tmp.next
-    new.prev = tmp
-    new.next = tmp.next
-    tmp.next = new
-    if new.next != None:
-        new.next.prev = new
+def sortedInsert(head, data):
+    newnode = Node(data)
+    if head is None:
+        return newnode
+    current = head
+    while current.next != None:
+        if newnode.data >= current.data and newnode.data <= current.next.data:
+            current.next.prev = newnode
+            newnode.next = current.next
+            current.next = newnode
+            return head
+        current = current.next
+    newnode.prev = current
+    current.next = newnode
     return head
-  
-  
+
