@@ -3,28 +3,35 @@
  head could be None as well for empty list
  Node is defined as
  
- class Node(object):
- 
-   def __init__(self, data=None, next_node=None, prev_node = None):
-       self.data = data
-       self.next = next_node
-       self.prev = prev_node
+class Node(object):
+    def __init__(self,data=None,next_node=None,prev_node=None):
+        self.data = data
+        self.next = next_node
+        self.prev = prev_node
 
- return the head node of the updated list 
-"""
 def sortedInsert(head, data):
     newnode = Node(data)
-    if head is None:
-        return newnode
     current = head
-    while current.next != None:
-        if newnode.data >= current.data and newnode.data <= current.next.data:
-            current.next.prev = newnode
-            newnode.next = current.next
-            current.next = newnode
-            return head
-        current = current.next
-    newnode.prev = current
-    current.next = newnode
-    return head
+    if head.data > newnode.data:
+        newnode.next = current 
+        head = newnode
 
+    else:
+        current = head 
+        while current != None:
+            if current.data > newnode.data:
+                temp = current.prev
+                newnode.prev = temp
+                newnode.next = current
+                current.prev = newnode
+                temp.next = newnode
+                break
+            elif current.next is None:
+                current.next = newnode
+                newnode.prev = current
+                break
+            current =  current.next
+    return head
+    
+
+if __name__ == '__main__':
